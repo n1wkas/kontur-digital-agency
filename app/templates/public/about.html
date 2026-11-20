@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% from "partials/ui.html" import breadcrumbs %}
+
+{% block title %}О студии — Контур{% endblock %}
+{% block description %}Демонстрационная страница о цифровой студии «Контур»: принципы работы и команда.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    {{ breadcrumbs([("Главная", "public.index"), ("О студии", None)]) }}
+    <p class="eyebrow">О студии</p>
+    <h1 class="page-title">Небольшая команда с ясным процессом</h1>
+    <p class="page-lead">
+      Контур — вымышленная студия для демонстрации подхода к работе.
+      Мы верим, что хороший сайт начинается с вопроса «зачем», а не с выбора шрифта.
+    </p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="about-intro">
+      <div>
+        <h2 class="detail-subtitle">Чем занимаемся</h2>
+        <p class="prose">
+          Проектируем и собираем сайты для небольших компаний: помогаем
+          сформулировать предложение, выстроить структуру и сделать интерфейс,
+          которым удобно пользоваться с любого устройства.
+        </p>
+      </div>
+      <div>
+        <h2 class="detail-subtitle">Как работаем</h2>
+        <p class="prose">
+          Работаем короткими итерациями: показываем промежуточные результаты,
+          собираем обратную связь и не держим финальный результат в секрете
+          до самого запуска.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="values-heading">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title" id="values-heading">Принципы</h2>
+    </div>
+    <div class="grid grid--services">
+      {% for value in values %}
+        <article class="card">
+          <span class="card__index">{{ "%02d"|format(loop.index) }}</span>
+          <h3 class="card__title">{{ value.title }}</h3>
+          <p class="card__text">{{ value.text }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="team-heading">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title" id="team-heading">Команда</h2>
+      <span class="badge">Демо-профили</span>
+    </div>
+    <div class="team-grid">
+      {% for member in team %}
+        <article class="member">
+          <span class="member__avatar" aria-hidden="true">{{ member.initials }}</span>
+          <h3 class="member__name">{{ member.name }}</h3>
+          <p class="member__role">{{ member.role }}</p>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="demo-note">
+      Имена, роли и описания — вымышленные примеры для демонстрационного проекта.
+    </p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta">
+      <div class="cta__text">
+        <h2 class="cta__title">Хотите обсудить проект?</h2>
+        <p class="cta__lead">Напишите пару слов о задаче — ответим и предложим следующий шаг.</p>
+      </div>
+      <a class="btn btn--primary" href="{{ url_for('public.contacts') }}">Связаться</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

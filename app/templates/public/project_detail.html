@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% from "partials/ui.html" import breadcrumbs %}
+
+{% block title %}{{ project.title }} — Контур{% endblock %}
+{% block description %}{{ project.summary }}{% endblock %}
+
+{% block content %}
+<article>
+  <section class="page-hero page-hero--compact">
+    <div class="container">
+      {{ breadcrumbs([
+        ("Главная", "public.index"),
+        ("Портфолио", "public.portfolio"),
+        (project.title, None)
+      ]) }}
+      <p class="eyebrow">{{ project.category or "Кейс" }}</p>
+      <h1 class="page-title">{{ project.title }}</h1>
+      {% if project.summary %}
+        <p class="page-lead">{{ project.summary }}</p>
+      {% endif %}
+      <p class="demo-note">Демонстрационный кейс — вымышленный пример, не работа реального клиента.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      {% if project.image_path %}
+        <img
+          class="case-media"
+          src="{{ url_for('public.media', filename=project.image_path) }}"
+          alt="Обложка кейса «{{ project.title }}»"
+        >
+      {% else %}
+        <div class="case-media case-media--empty" role="img" aria-label="Демонстрационная обложка кейса">
+          <span>{{ project.title }}</span>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container case-sections">
+      {% if project.challenge %}
+        <section class="case-block">
+          <h2 class="case-block__label">Задача</h2>
+          <p class="prose">{{ project.challenge }}</p>
+        </section>
+      {% endif %}
+
+      {% if project.solution %}
+        <section class="case-block">
+          <h2 class="case-block__label">Решение</h2>
+          <p class="prose">{{ project.solution }}</p>
+        </section>
+      {% endif %}
+
+      {% if project.outcome %}
+        <section class="case-block">
+          <h2 class="case-block__label">Результат</h2>
+          <p class="prose">{{ project.outcome }}</p>
+        </section>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="cta">
+        <div class="cta__text">
+          <h2 class="cta__title">Похожая задача?</h2>
+          <p class="cta__lead">Расскажите о проекте — предложим структуру и оценим сроки.</p>
+        </div>
+        <a class="btn btn--primary" href="{{ url_for('public.contacts') }}">Обсудить проект</a>
+      </div>
+    </div>
+  </section>
+
+  {% if related %}
+    <section class="section" aria-labelledby="related-heading">
+      <div class="container">
+        <div class="section__head">
+          <h2 class="section__title" id="related-heading">Другие кейсы</h2>
+          <a class="section__link" href="{{ url_for('public.portfolio') }}">Все проекты →</a>
+        </div>
+        <div class="grid grid--projects">
+          {% for item in related %}
+            <article class="project-card">
+              <div class="project-card__media" aria-hidden="true">
+                <span class="project-card__badge">{{ item.category }}</span>
+              </div>
+              <div class="project-card__body">
+                <h3 class="project-card__title">
+                  <a href="{{ url_for('public.project_detail', slug=item.slug) }}">{{ item.title }}</a>
+                </h3>
+                <p class="project-card__text">{{ item.summary }}</p>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+  {% endif %}
+</article>
+{% endblock %}

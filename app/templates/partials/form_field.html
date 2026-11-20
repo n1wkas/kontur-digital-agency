@@ -1,0 +1,18 @@
+{% macro field(field, hint=None) %}
+  <div class="field{% if field.errors %} field--error{% endif %}">
+    {{ field.label(class="field__label") }}
+    {% if field.errors %}
+      {{ field(class="field__control", aria_invalid="true", aria_describedby=field.id ~ "-error") }}
+    {% elif hint %}
+      {{ field(class="field__control", aria_describedby=field.id ~ "-hint") }}
+    {% else %}
+      {{ field(class="field__control") }}
+    {% endif %}
+    {% if hint %}
+      <p class="field__hint" id="{{ field.id }}-hint">{{ hint }}</p>
+    {% endif %}
+    {% for error in field.errors %}
+      <p class="field__error" id="{{ field.id }}-error">{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endmacro %}

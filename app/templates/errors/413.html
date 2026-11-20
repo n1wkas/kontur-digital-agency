@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Файл слишком большой — Контур{% endblock %}
+
+{% block content %}
+<section class="section error-page">
+  <div class="container">
+    <p class="error-page__code">413</p>
+    <h1 class="page-title">Файл слишком большой</h1>
+    <p class="page-lead">
+      Максимальный размер загружаемого изображения — 2 МБ.
+      Выберите файл поменьше и попробуйте снова.
+    </p>
+    <p>
+      <a class="btn btn--primary" href="{{ url_for('public.index') }}">На главную</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

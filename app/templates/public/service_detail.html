@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% from "partials/ui.html" import breadcrumbs %}
+
+{% block title %}{{ service.title }} — Контур{% endblock %}
+{% block description %}{{ service.short_description }}{% endblock %}
+
+{% block content %}
+<section class="page-hero page-hero--compact">
+  <div class="container">
+    {{ breadcrumbs([
+      ("Главная", "public.index"),
+      ("Услуги", "public.services"),
+      (service.title, None)
+    ]) }}
+    <p class="eyebrow">Услуга</p>
+    <h1 class="page-title">{{ service.title }}</h1>
+    {% if service.short_description %}
+      <p class="page-lead">{{ service.short_description }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container detail-layout">
+    <div class="detail-main">
+      {% if service.description %}
+        <p class="prose">{{ service.description }}</p>
+      {% else %}
+        <p class="prose">Подробное описание услуги скоро появится.</p>
+      {% endif %}
+
+      <h2 class="detail-subtitle">Что входит</h2>
+      <ul class="checklist">
+        <li>Интервью и уточнение задачи</li>
+        <li>Структура страниц и прототип</li>
+        <li>Дизайн и адаптивная вёрстка</li>
+        <li>Передача материалов и инструкций</li>
+      </ul>
+    </div>
+
+    <aside class="aside-card">
+      <h2 class="aside-card__title">Обсудить задачу</h2>
+      <p class="aside-card__text">
+        Расскажите, что нужно сделать, — предложим формат работы и оценим сроки.
+      </p>
+      <a class="btn btn--primary" href="{{ url_for('public.contacts', service=service.slug) }}">Оставить заявку</a>
+
+      {% if other_services %}
+        <div class="aside-card__list">
+          <p class="aside-card__label">Другие услуги</p>
+          <ul>
+            {% for item in other_services %}
+              <li>
+                <a href="{{ url_for('public.service_detail', slug=item.slug) }}">{{ item.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    </aside>
+  </div>
+</section>
+{% endblock %}

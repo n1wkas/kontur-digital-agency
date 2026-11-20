@@ -1,0 +1,79 @@
+{% extends "admin/base.html" %}
+{% from "admin/partials/badges.html" import lead_status %}
+
+{% block title %}Обзор — админка{% endblock %}
+{% block page_title %}Обзор{% endblock %}
+
+{% block content %}
+<div class="stat-grid">
+  <a class="stat-card" href="{{ url_for('admin.services') }}">
+    <span class="stat-card__label">Услуги</span>
+    <span class="stat-card__value">{{ stats.services }}</span>
+    <span class="stat-card__meta">опубликовано: {{ stats.services_published }}</span>
+  </a>
+  <a class="stat-card" href="{{ url_for('admin.projects') }}">
+    <span class="stat-card__label">Кейсы</span>
+    <span class="stat-card__value">{{ stats.projects }}</span>
+    <span class="stat-card__meta">опубликовано: {{ stats.projects_published }}</span>
+  </a>
+  <a class="stat-card" href="{{ url_for('admin.testimonials') }}">
+    <span class="stat-card__label">Отзывы</span>
+    <span class="stat-card__value">{{ stats.testimonials }}</span>
+    <span class="stat-card__meta">опубликовано: {{ stats.testimonials_published }}</span>
+  </a>
+  <a class="stat-card stat-card--accent" href="{{ url_for('admin.leads') }}">
+    <span class="stat-card__label">Заявки</span>
+    <span class="stat-card__value">{{ stats.leads }}</span>
+    <span class="stat-card__meta">новых: {{ stats.leads_new }}</span>
+  </a>
+</div>
+
+<div class="admin-panel">
+  <div class="admin-panel__head">
+    <h2 class="admin-panel__title">Последние заявки</h2>
+    <a class="admin-link" href="{{ url_for('admin.leads') }}">Все заявки →</a>
+  </div>
+
+  {% if recent_leads %}
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th scope="col">Дата</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Контакт</th>
+            <th scope="col">Услуга</th>
+            <th scope="col">Статус</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for lead in recent_leads %}
+            <tr>
+              <td class="admin-mono">{{ lead.created_at|dt }}</td>
+              <td><a class="admin-link" href="{{ url_for('admin.lead_detail', lead_id=lead.id) }}">{{ lead.name }}</a></td>
+              <td>{{ lead.contact }}</td>
+              <td>{{ lead.service.title if lead.service else "—" }}</td>
+              <td>{{ lead_status(lead.status, lead.status_label) }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="admin-empty">
+      Заявок пока нет. Они появятся здесь после отправки формы на странице «Контакты».
+    </p>
+  {% endif %}
+</div>
+
+<div class="admin-panel">
+  <div class="admin-panel__head">
+    <h2 class="admin-panel__title">Быстрые действия</h2>
+  </div>
+  <div class="admin-actions admin-actions--start">
+    <a class="btn btn--primary btn--sm" href="{{ url_for('admin.service_new') }}">Новая услуга</a>
+    <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.project_new') }}">Новый кейс</a>
+    <a class="btn btn--ghost btn--sm" href="{{ url_for('admin.testimonial_new') }}">Новый отзыв</a>
+  </div>
+</div>
+{% endblock %}

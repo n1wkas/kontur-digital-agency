@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+{% from "partials/form_field.html" import field %}
+
+{% set is_edit = project is not none %}
+{% block title %}{{ "Редактирование кейса" if is_edit else "Новый кейс" }} — админка{% endblock %}
+{% block page_title %}{{ "Редактирование кейса" if is_edit else "Новый кейс" }}{% endblock %}
+
+{% block content %}
+<form class="admin-form" method="post" enctype="multipart/form-data" novalidate>
+  {{ form.hidden_tag() }}
+
+  <div class="admin-panel">
+    <div class="form__row">
+      {{ field(form.title) }}
+      {{ field(form.slug, hint="Оставьте пустым — slug сгенерируется из названия.") }}
+    </div>
+
+    <div class="form__row">
+      {{ field(form.category) }}
+      {{ field(form.summary) }}
+    </div>
+
+    {{ field(form.challenge, hint="Что нужно было решить.") }}
+    {{ field(form.solution, hint="Что сделали.") }}
+    {{ field(form.outcome, hint="Что получилось. Не указывайте реальные метрики.") }}
+
+    {% if is_edit and project.image_path %}
+      <div class="admin-thumb-wrap">
+        <img class="admin-thumb" src="{{ url_for('public.media', filename=project.image_path) }}" alt="Текущая обложка кейса">
+        <p class="admin-muted">Загрузите новый файл, чтобы заменить обложку.</p>
+      </div>
+    {% endif %}
+
+    {{ field(form.image, hint="JPG, PNG или WebP, не больше 2 МБ.") }}
+
+    <div class="checkbox-row">
+      <label class="checkbox">
+        {{ form.is_featured() }}
+        <span>{{ form.is_featured.label.text }}</span>
+      </label>
+      <label class="checkbox">
+        {{ form.is_published() }}
+        <span>{{ form.is_published.label.text }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="admin-form__actions">
+    {{ form.submit(class="btn btn--primary") }}
+    <a class="btn btn--ghost" href="{{ url_for('admin.projects') }}">Отмена</a>
+  </div>
+</form>
+{% endblock %}

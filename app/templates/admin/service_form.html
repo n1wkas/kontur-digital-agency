@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+{% from "partials/form_field.html" import field %}
+
+{% set is_edit = service is not none %}
+{% block title %}{{ "Редактирование услуги" if is_edit else "Новая услуга" }} — админка{% endblock %}
+{% block page_title %}{{ "Редактирование услуги" if is_edit else "Новая услуга" }}{% endblock %}
+
+{% block content %}
+<form class="admin-form" method="post" novalidate>
+  {{ form.hidden_tag() }}
+
+  <div class="admin-panel">
+    <div class="form__row">
+      {{ field(form.title) }}
+      {{ field(form.slug, hint="Оставьте пустым — slug сгенерируется из названия.") }}
+    </div>
+
+    {{ field(form.short_description, hint="Показывается в карточке на главной.") }}
+    {{ field(form.description) }}
+
+    <div class="form__row">
+      {{ field(form.icon_name, hint="Служебное имя иконки, можно не заполнять.") }}
+      {{ field(form.sort_order, hint="Меньше — выше в списке.") }}
+    </div>
+
+    <div class="checkbox-row">
+      <label class="checkbox">
+        {{ form.is_published() }}
+        <span>{{ form.is_published.label.text }}</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="admin-form__actions">
+    {{ form.submit(class="btn btn--primary") }}
+    <a class="btn btn--ghost" href="{{ url_for('admin.services') }}">Отмена</a>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Заявка отправлена — Контур{% endblock %}
+
+{% block content %}
+<section class="section success">
+  <div class="container">
+    <div class="success__inner">
+      <span class="success__mark" aria-hidden="true">✓</span>
+      <h1 class="page-title">Заявка отправлена</h1>
+      <p class="page-lead">
+        Спасибо! Мы получили сообщение и свяжемся с вами в рабочее время.
+        Это демонстрационный проект, поэтому письмо никуда не уходит —
+        заявка сохранена только в локальной базе.
+      </p>
+      <div class="success__actions">
+        <a class="btn btn--primary" href="{{ url_for('public.index') }}">На главную</a>
+        <a class="btn btn--ghost" href="{{ url_for('public.portfolio') }}">Смотреть кейсы</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

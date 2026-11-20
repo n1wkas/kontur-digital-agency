@@ -1,0 +1,60 @@
+{% extends "admin/base.html" %}
+{% from "admin/partials/badges.html" import publish %}
+
+{% block title %}Услуги — админка{% endblock %}
+{% block page_title %}Услуги{% endblock %}
+
+{% block content %}
+<div class="admin-toolbar">
+  <p class="admin-muted">Всего: {{ services|length }}</p>
+  <a class="btn btn--primary btn--sm" href="{{ url_for('admin.service_new') }}">+ Новая услуга</a>
+</div>
+
+{% if services %}
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">Название</th>
+          <th scope="col">Slug</th>
+          <th scope="col">Порядок</th>
+          <th scope="col">Статус</th>
+          <th scope="col" class="admin-table__actions">Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in services %}
+          <tr>
+            <td>
+              <a class="admin-link" href="{{ url_for('admin.service_edit', service_id=service.id) }}">{{ service.title }}</a>
+            </td>
+            <td class="admin-mono">{{ service.slug }}</td>
+            <td>{{ service.sort_order }}</td>
+            <td>{{ publish(service.is_published) }}</td>
+            <td>
+              <div class="admin-actions">
+                <a class="admin-link" href="{{ url_for('admin.service_edit', service_id=service.id) }}">Изменить</a>
+                <form method="post" action="{{ url_for('admin.service_toggle', service_id=service.id) }}">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="admin-link admin-link--button" type="submit">
+                    {{ "Скрыть" if service.is_published else "Опубликовать" }}
+                  </button>
+                </form>
+                <form method="post" action="{{ url_for('admin.service_delete', service_id=service.id) }}" data-confirm="Удалить услугу?">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                  <button class="admin-link admin-link--button admin-link--danger" type="submit">Удалить</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="empty">
+    <p class="empty__title">Услуг пока нет</p>
+    <p class="empty__text">Создайте первую услугу — она появится на сайте.</p>
+  </div>
+{% endif %}
+{% endblock %}

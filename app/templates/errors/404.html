@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Страница не найдена — Контур{% endblock %}
+
+{% block content %}
+<section class="section error-page">
+  <div class="container">
+    <p class="error-page__code">404</p>
+    <h1 class="page-title">Страница не найдена</h1>
+    <p class="page-lead">
+      Возможно, адрес изменился или страница ещё не опубликована.
+    </p>
+    <p>
+      <a class="btn btn--primary" href="{{ url_for('public.index') }}">На главную</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

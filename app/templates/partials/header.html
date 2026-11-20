@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="logo" href="{{ url_for('public.index') }}">
+      <span class="logo__mark" aria-hidden="true"></span>
+      Контур
+    </a>
+
+    <button
+      class="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      aria-label="Открыть меню"
+      data-nav-toggle
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav" id="site-nav" aria-label="Основная навигация" data-nav>
+      <a href="{{ url_for('public.services') }}">Услуги</a>
+      <a href="{{ url_for('public.portfolio') }}">Портфолио</a>
+      <a href="{{ url_for('public.about') }}">О студии</a>
+      <a href="{{ url_for('public.contacts') }}">Контакты</a>
+      <a class="btn btn--primary btn--sm" href="{{ url_for('public.contacts') }}">Обсудить проект</a>
+    </nav>
+  </div>
+</header>

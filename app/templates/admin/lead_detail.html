@@ -1,0 +1,50 @@
+{% extends "admin/base.html" %}
+{% from "admin/partials/badges.html" import lead_status %}
+{% from "partials/form_field.html" import field %}
+
+{% block title %}Заявка №{{ lead.id }} — админка{% endblock %}
+{% block page_title %}Заявка №{{ lead.id }}{% endblock %}
+
+{% block content %}
+<p class="admin-back">
+  <a class="admin-link" href="{{ url_for('admin.leads') }}">← Все заявки</a>
+</p>
+
+<div class="admin-panel">
+  <div class="admin-panel__head">
+    <h2 class="admin-panel__title">{{ lead.name }}</h2>
+    {{ lead_status(lead.status, lead.status_label) }}
+  </div>
+
+  <dl class="admin-details">
+    <div>
+      <dt>Контакт</dt>
+      <dd>{{ lead.contact }}</dd>
+    </div>
+    <div>
+      <dt>Услуга</dt>
+      <dd>{{ lead.service.title if lead.service else "Не выбрана" }}</dd>
+    </div>
+    <div>
+      <dt>Получена</dt>
+      <dd>{{ lead.created_at|dt }}</dd>
+    </div>
+  </dl>
+
+  <h3 class="admin-subtitle">Сообщение</h3>
+  <p class="prose">{{ lead.message }}</p>
+</div>
+
+<div class="admin-panel">
+  <h2 class="admin-panel__title">Статус</h2>
+  <form class="admin-form" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="form__row">
+      {{ field(form.status) }}
+      <div class="admin-form__inline-submit">
+        {{ form.submit(class="btn btn--primary btn--sm") }}
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

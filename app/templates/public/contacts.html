@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% from "partials/ui.html" import breadcrumbs %}
+{% from "partials/form_field.html" import field %}
+
+{% block title %}Контакты — Контур{% endblock %}
+{% block description %}Свяжитесь с демонстрационной цифровой студией «Контур»: форма заявки и контакты.{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    {{ breadcrumbs([("Главная", "public.index"), ("Контакты", None)]) }}
+    <p class="eyebrow">Контакты</p>
+    <h1 class="page-title">Расскажите о задаче</h1>
+    <p class="page-lead">
+      Заполните короткую форму или напишите напрямую. Отвечаем в рабочее время,
+      обычно в течение одного дня. Все контакты ниже — демонстрационные.
+    </p>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="contact-grid">
+      <article class="contact-card">
+        <p class="contact-card__label">Почта</p>
+        <a class="contact-card__value" href="mailto:hello@contour.example">hello@contour.example</a>
+        <p class="contact-card__note">Для брифов и документов</p>
+      </article>
+      <article class="contact-card">
+        <p class="contact-card__label">Telegram</p>
+        <a class="contact-card__value" href="https://t.me/" rel="noopener" target="_blank">@contour_demo</a>
+        <p class="contact-card__note">Быстрые вопросы</p>
+      </article>
+      <article class="contact-card">
+        <p class="contact-card__label">Студия</p>
+        <p class="contact-card__value">Город, улица, 1</p>
+        <p class="contact-card__note">Демонстрационный адрес</p>
+      </article>
+      <article class="contact-card">
+        <p class="contact-card__label">Часы работы</p>
+        <p class="contact-card__value">Пн–Пт, 10:00–19:00</p>
+        <p class="contact-card__note">По местному времени</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container detail-layout">
+    <div class="detail-main">
+      <h2 class="detail-subtitle">Оставить заявку</h2>
+      <p class="prose">
+        Опишите, что нужно сделать, и оставьте удобный способ связи.
+        Поля со звёздочкой обязательны.
+      </p>
+
+      <form class="form" method="post" action="{{ url_for('public.contacts') }}" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="form__row">
+          {{ field(form.name) }}
+          {{ field(form.contact) }}
+        </div>
+
+        {{ field(form.service_id, hint="Можно не выбирать, если ещё не определились.") }}
+        {{ field(form.message, hint="От 10 до 2000 символов. Чем конкретнее задача, тем полезнее ответ.") }}
+
+        <div class="form__actions">
+          <button class="btn btn--primary" type="submit">Отправить заявку</button>
+        </div>
+
+        <p class="form__note">
+          Демонстрационная форма: заявка сохраняется в локальной базе проекта
+          и не отправляется по почте.
+        </p>
+      </form>
+    </div>
+
+    <aside class="aside-card">
+      <h2 class="aside-card__title">Что стоит написать</h2>
+      <ul class="checklist">
+        <li>Чем занимается компания и что нужно сделать</li>
+        <li>Какие сроки и ориентиры по бюджету</li>
+        <li>Есть ли готовые материалы: тексты, фото, логотип</li>
+        <li>Кто принимает решения по проекту</li>
+      </ul>
+
+      <div class="aside-card__list">
+        <p class="aside-card__label">Напрямую</p>
+        <ul>
+          <li><a href="mailto:hello@contour.example">hello@contour.example</a></li>
+          <li><a href="https://t.me/" rel="noopener" target="_blank">@contour_demo</a></li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

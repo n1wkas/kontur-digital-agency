@@ -1,0 +1,9 @@
+{% macro lead_status(status, label) %}
+  <span class="status status--lead-{{ status }}">{{ label }}</span>
+{% endmacro %}
+
+{% macro publish(is_published) %}
+  <span class="status status--{{ 'published' if is_published else 'hidden' }}">
+    {{ 'Опубликовано' if is_published else 'Скрыто' }}
+  </span>
+{% endmacro %}

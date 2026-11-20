@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Контур — цифровая студия{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <p class="eyebrow">Цифровая студия · демо-проект</p>
+    <h1 class="hero__title">
+      Сайты, которые понятно объясняют, <span class="accent">чем вы полезны</span>
+    </h1>
+    <p class="hero__lead">
+      Контур — небольшая студия. Проектируем, собираем и поддерживаем сайты:
+      от структуры и дизайна до админки, в которой легко обновлять контент.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="{{ url_for('public.contacts') }}">Обсудить проект</a>
+      <a class="btn btn--ghost" href="{{ url_for('public.portfolio') }}">Смотреть кейсы</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title" id="services-heading">Что мы делаем</h2>
+      <a class="section__link" href="{{ url_for('public.services') }}">Все услуги →</a>
+    </div>
+
+    {% if services %}
+      <div class="grid grid--services">
+        {% for service in services %}
+          <article class="card card--service">
+            <span class="card__index">{{ "%02d"|format(loop.index) }}</span>
+            <h3 class="card__title">
+              <a href="{{ url_for('public.service_detail', slug=service.slug) }}">{{ service.title }}</a>
+            </h3>
+            <p class="card__text">{{ service.short_description }}</p>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">
+        <p class="empty__title">Пока нет опубликованных услуг</p>
+        <p class="empty__text">Добавьте их в админке — и они появятся здесь.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section section--alt" aria-labelledby="projects-heading">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title" id="projects-heading">Избранные кейсы</h2>
+      <a class="section__link" href="{{ url_for('public.portfolio') }}">Все проекты →</a>
+    </div>
+
+    {% if projects %}
+      <div class="grid grid--projects">
+        {% for project in projects %}
+          <article class="project-card">
+            <div class="project-card__media" aria-hidden="true">
+              <span class="project-card__badge">{{ project.category }}</span>
+            </div>
+            <div class="project-card__body">
+              <h3 class="project-card__title">
+                <a href="{{ url_for('public.project_detail', slug=project.slug) }}">{{ project.title }}</a>
+              </h3>
+              <p class="project-card__text">{{ project.summary }}</p>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">
+        <p class="empty__title">Кейсов пока нет</p>
+        <p class="empty__text">Опубликованные проекты появятся в этом блоке.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section" aria-labelledby="testimonials-heading">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title" id="testimonials-heading">Отзывы</h2>
+      <span class="badge">Демо-данные</span>
+    </div>
+
+    {% if testimonials %}
+      <div class="grid grid--quotes">
+        {% for testimonial in testimonials %}
+          <figure class="quote">
+            <blockquote class="quote__text">{{ testimonial.text }}</blockquote>
+            <figcaption class="quote__author">
+              <span class="quote__name">{{ testimonial.author_name }}</span>
+              {% if testimonial.company_label %}
+                <span class="quote__company">{{ testimonial.company_label }}</span>
+              {% endif %}
+            </figcaption>
+          </figure>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty">
+        <p class="empty__title">Отзывов пока нет</p>
+        <p class="empty__text">Опубликованные отзывы появятся здесь.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="container">
+    <div class="cta">
+      <div class="cta__text">
+        <h2 class="cta__title">Расскажите о задаче</h2>
+        <p class="cta__lead">
+          Ответим на вопросы, предложим структуру и оценим сроки.
+          Демонстрационная форма — без реальной отправки писем.
+        </p>
+      </div>
+      <a class="btn btn--primary" href="{{ url_for('public.contacts') }}">Оставить заявку</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

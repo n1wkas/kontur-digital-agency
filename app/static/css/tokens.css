@@ -1,0 +1,52 @@
+:root {
+  /* Цвета */
+  --c-bg: #f6f5f2;
+  --c-surface: #ffffff;
+  --c-ink: #121214;
+  --c-ink-muted: #62626d;
+  --c-line: #e2e0da;
+  --c-line-strong: #cfccc4;
+  --c-accent: #ff4d2e;
+  --c-accent-strong: #c93a1b;
+  --c-success: #1f7a4d;
+  --c-warning: #a86a00;
+  --c-danger: #b3261e;
+
+  /* Отступы, база 4px */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-24: 96px;
+
+  /* Типографика */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fs-display: clamp(2.5rem, 6vw, 5rem);
+  --fs-h2: clamp(1.75rem, 4vw, 2.75rem);
+  --fs-h3: clamp(1.125rem, 2vw, 1.375rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+
+  /* Радиусы */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
+  /* Тени */
+  --shadow-sm: 0 1px 2px rgba(18, 18, 20, 0.06);
+  --shadow-md: 0 12px 32px rgba(18, 18, 20, 0.08);
+
+  /* Анимации */
+  --t-fast: 160ms ease;
+  --t-base: 240ms ease;
+
+  /* Сетка */
+  --container: 1200px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --header-h: 72px;
+}

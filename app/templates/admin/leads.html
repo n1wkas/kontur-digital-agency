@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+{% from "admin/partials/badges.html" import lead_status %}
+
+{% block title %}Заявки — админка{% endblock %}
+{% block page_title %}Заявки{% endblock %}
+
+{% block content %}
+<nav class="filters" aria-label="Фильтр заявок по статусу">
+  <a class="filter{% if not active_status %} filter--active{% endif %}" href="{{ url_for('admin.leads') }}">
+    Все · {{ total }}
+  </a>
+  {% for value, label in statuses %}
+    <a
+      class="filter{% if active_status == value %} filter--active{% endif %}"
+      href="{{ url_for('admin.leads', status=value) }}"
+    >{{ label }} · {{ counts[value] }}</a>
+  {% endfor %}
+</nav>
+
+{% if leads %}
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th scope="col">Дата</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Контакт</th>
+          <th scope="col">Услуга</th>
+          <th scope="col">Статус</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for lead in leads %}
+          <tr>
+            <td class="admin-mono">{{ lead.created_at|dt }}</td>
+            <td><a class="admin-link" href="{{ url_for('admin.lead_detail', lead_id=lead.id) }}">{{ lead.name }}</a></td>
+            <td>{{ lead.contact }}</td>
+            <td>{{ lead.service.title if lead.service else "—" }}</td>
+            <td>{{ lead_status(lead.status, lead.status_label) }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="empty">
+    <p class="empty__title">Заявок с таким статусом нет</p>
+    <p class="empty__text">
+      <a class="text-link" href="{{ url_for('admin.leads') }}">Показать все заявки</a>
+    </p>
+  </div>
+{% endif %}
+{% endblock %}

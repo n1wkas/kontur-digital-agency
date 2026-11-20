@@ -1,0 +1,14 @@
+{% macro breadcrumbs(items) %}
+  <nav class="breadcrumbs" aria-label="Хлебные крошки">
+    {% for label, endpoint in items %}
+      {% if endpoint %}
+        <a href="{{ url_for(endpoint) }}">{{ label }}</a>
+      {% else %}
+        <span aria-current="page">{{ label }}</span>
+      {% endif %}
+      {% if not loop.last %}
+        <span class="breadcrumbs__sep" aria-hidden="true">/</span>
+      {% endif %}
+    {% endfor %}
+  </nav>
+{% endmacro %}
